@@ -14,6 +14,7 @@
   --text:#f8fafc;
   --muted:#94a3b8;
   --gold:#b8860b;
+  --gold-light:#d4af37;
   --green:#22c55e;
   --red:#ef4444;
   --radius:18px;
@@ -34,9 +35,13 @@ html,body{
 /* HEADER */
 header{
   text-align:center;
-  padding:15px 0 10px;
-  animation:fadeIn 1s ease;
+  padding:20px 0 15px;
+  background:linear-gradient(180deg,rgba(184,134,11,0.15),transparent);
+  box-shadow:0 3px 10px rgba(0,0,0,.4);
   flex-shrink:0;
+  position:sticky;
+  top:0;
+  z-index:5;
 }
 header img{
   width:110px;
@@ -45,10 +50,11 @@ header img{
 }
 header h1{
   margin-top:10px;
-  font-size:1.6rem;
-  color:var(--gold);
+  font-size:1.8rem;
+  color:var(--gold-light);
   font-weight:700;
   letter-spacing:.5px;
+  text-shadow:0 0 10px rgba(212,175,55,.4);
 }
 
 /* CALENDÁRIO */
@@ -61,10 +67,11 @@ header h1{
   height:100%;
   background:var(--card);
   border-radius:0;
-  padding:20px 24px 40px;
+  padding:25px 30px 40px;
   box-shadow:0 0 50px rgba(0,0,0,.6);
   border-top:1px solid var(--line);
   overflow-y:auto;
+  animation:fadeIn 1s ease;
 }
 
 .calendar-header{
@@ -73,63 +80,73 @@ header h1{
   align-items:center;
   border-bottom:1px solid var(--line);
   padding-bottom:14px;
-  margin-bottom:14px;
+  margin-bottom:25px;
 }
 .calendar-header button{
   background:none;
   border:none;
-  color:var(--gold);
+  color:var(--gold-light);
   font-size:2rem;
   cursor:pointer;
   padding:6px 10px;
   font-weight:700;
-  transition:transform .15s;
+  transition:transform .15s, color .2s;
 }
-.calendar-header button:hover{transform:scale(1.2);}
+.calendar-header button:hover{
+  transform:scale(1.25);
+  color:var(--gold);
+}
 .calendar-header h2{
   margin:0;
-  font-size:1.8rem;
-  color:var(--text);
+  font-size:2rem;
+  color:var(--gold-light);
+  font-weight:600;
 }
 
 /* DIAS */
 .weekdays,.days{
   display:grid;
   grid-template-columns:repeat(7,1fr);
-  gap:10px;
+  gap:12px;
   text-align:center;
 }
 .weekdays div{
   font-size:1rem;
   color:var(--muted);
-  padding:6px 0;
+  padding:8px 0;
+  text-transform:uppercase;
+  letter-spacing:.8px;
 }
 .day{
   background:var(--bg);
   border:1px solid var(--line);
-  border-radius:12px;
+  border-radius:14px;
   padding:16px 8px;
-  min-height:120px;
-  font-size:1.1rem;
+  min-height:110px;
+  font-size:1.05rem;
   cursor:pointer;
   display:flex;
   flex-direction:column;
   justify-content:flex-start;
   align-items:center;
   transition:all .25s ease;
+  position:relative;
+  overflow:hidden;
+  animation:fadeInUp .4s ease;
 }
 .day:hover{
-  border-color:var(--gold);
-  box-shadow:0 0 12px rgba(184,134,11,.4);
+  border-color:var(--gold-light);
+  box-shadow:0 0 20px rgba(212,175,55,.35);
+  transform:translateY(-2px);
 }
 .day.disabled{
-  opacity:.25;
+  opacity:.15;
   pointer-events:none;
 }
 .day .num{
   font-weight:700;
-  font-size:1.2rem;
-  margin-bottom:5px;
+  font-size:1.3rem;
+  margin-bottom:6px;
 }
 .badge{
   font-size:.85rem;
@@ -162,7 +179,7 @@ header h1{
   border-radius:var(--radius);
   padding:25px;
   width:90%;
-  max-width:480px;
+  max-width:500px;
   box-shadow:0 15px 45px rgba(0,0,0,.7);
   border:1px solid var(--line);
   animation:fadeInUp .3s ease;
@@ -171,10 +188,11 @@ header h1{
 }
 .modal-content h3{
   text-align:center;
-  color:var(--gold);
-  font-size:1.3rem;
+  color:var(--gold-light);
+  font-size:1.4rem;
   margin-top:0;
   margin-bottom:15px;
+  text-shadow:0 0 10px rgba(212,175,55,.3);
 }
 .reserva-item{
   border:1px solid var(--line);
@@ -213,15 +231,16 @@ header h1{
 
 /* MOBILE */
 @media(max-width:900px){
-  header img{width:90px;}
-  header h1{font-size:1.2rem;}
-  .calendar{padding:10px;height:calc(100vh - 120px);}
-  .day{min-height:90px;font-size:.9rem;}
+  header img{width:80px;}
+  header h1{font-size:1.3rem;}
+  .calendar{padding:15px;height:calc(100vh - 120px);}
+  .calendar-header h2{font-size:1.5rem;}
+  .day{min-height:85px;font-size:.9rem;}
   .badge{font-size:.75rem;}
 }
 
 @keyframes fadeIn{from{opacity:0}to{opacity:1}}
-@keyframes fadeInUp{from{opacity:0;transform:translateY(25px);}to{opacity:1;transform:translateY(0);}}
+@keyframes fadeInUp{from{opacity:0;transform:translateY(20px);}to{opacity:1;transform:translateY(0);}}
 </style>
 </head>
 
