@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <title>Delícia Gourmet – Calendário de Reservas</title>
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600&family=Inter:wght@400;600&display=swap" rel="stylesheet">
 
 <style>
@@ -21,6 +21,7 @@ html,body{
   display:flex;
   flex-direction:column;
   overflow:hidden;
+  -webkit-tap-highlight-color:transparent;
 }
 
 /* HEADER */
@@ -50,6 +51,7 @@ header p{
   padding:20px 40px;
   height:calc(100vh - 110px);
   overflow-y:auto;
+  scroll-behavior:smooth;
 }
 .calendar-header{
   display:flex;
@@ -61,6 +63,7 @@ header p{
   font-family:'Playfair Display',serif;
   color:var(--gold);
   font-size:1.9rem;
+  text-align:center;
 }
 .calendar-header button{
   background:none;
@@ -69,6 +72,7 @@ header p{
   font-size:2rem;
   cursor:pointer;
   transition:.2s;
+  padding:4px 10px;
 }
 .calendar-header button:hover{
   transform:scale(1.25);
@@ -86,20 +90,23 @@ header p{
   color:var(--muted);
   font-weight:600;
   text-transform:uppercase;
+  font-size:.85rem;
 }
 .day{
   background:var(--card);
   border:1px solid rgba(255,255,255,.05);
   border-radius:var(--radius);
-  min-height:150px;
+  min-height:120px;
   display:flex;
   flex-direction:column;
   align-items:center;
   justify-content:center;
-  padding:16px;
+  padding:10px;
   transition:all .25s;
   cursor:pointer;
   font-size:1.1rem;
+  position:relative;
+  user-select:none;
 }
 .day:hover{
   transform:translateY(-3px);
@@ -111,39 +118,41 @@ header p{
   font-size:1.4rem;
   margin-bottom:6px;
 }
-.badge{
-  font-size:.9rem;
-  border-radius:10px;
-  padding:4px 8px;
-  margin-top:6px;
+.day.reservado{
+  background:#fff;
+  color:#000;
+  animation:pulse 1.5s infinite;
+  font-weight:600;
 }
-.badge.pend{background:rgba(239,68,68,.15);color:var(--red)}
-.badge.conf{background:rgba(34,197,94,.15);color:var(--green)}
+@keyframes pulse{
+  0%{box-shadow:0 0 0 rgba(255,255,255,.3);}
+  50%{box-shadow:0 0 25px rgba(255,255,255,.8);}
+  100%{box-shadow:0 0 0 rgba(255,255,255,.3);}
+}
 .day.disabled{opacity:.2;pointer-events:none}
 
 /* MODAL */
 #modal{
   position:fixed;
   inset:0;
-  background:rgba(0,0,0,.75);
+  background:rgba(0,0,0,.8);
   display:none;
   align-items:center;
   justify-content:center;
   z-index:99;
   padding:20px;
 }
-#modal.show{display:flex}
+#modal.show{display:flex;animation:fadeIn .3s ease}
 .modal-content{
   background:var(--card);
   border:1px solid var(--gold);
   border-radius:var(--radius);
   padding:25px 35px;
-  width:85%;
-  max-width:900px;
+  width:90%;
+  max-width:800px;
   max-height:85vh;
   overflow-y:auto;
   box-shadow:0 0 60px rgba(212,175,55,.25);
-  animation:fadeIn .3s ease;
 }
 @keyframes fadeIn{from{opacity:0;transform:scale(.95)}to{opacity:1;transform:scale(1)}}
 .modal-content h3{
@@ -154,6 +163,7 @@ header p{
   margin-bottom:20px;
   border-bottom:1px solid rgba(255,255,255,.1);
   padding-bottom:8px;
+  text-transform:capitalize;
 }
 .reserva-item{
   background:var(--bg);
@@ -161,11 +171,6 @@ header p{
   border-radius:12px;
   padding:16px;
   margin-bottom:14px;
-  transition:all .2s;
-}
-.reserva-item:hover{
-  border-color:var(--gold);
-  box-shadow:0 0 15px rgba(212,175,55,.15);
 }
 .reserva-item strong{color:var(--gold);font-size:1.1rem;}
 .reserva-item span{display:block;margin-top:6px;font-size:.95rem;color:var(--muted);}
@@ -179,6 +184,7 @@ header p{
   font-weight:600;
   margin-top:10px;
   transition:all .2s;
+  font-size:.9rem;
 }
 .btn-whats:hover{opacity:.9;transform:scale(1.03);}
 .close-btn{
@@ -197,7 +203,7 @@ header p{
   border-color:var(--gold);
 }
 
-/* OVERLAY DE CARREGAMENTO */
+/* LOADER */
 #overlay{
   position:fixed;
   inset:0;
@@ -221,14 +227,18 @@ header p{
   margin-bottom:20px;
 }
 @keyframes spin{to{transform:rotate(360deg)}}
-#errorMsg{text-align:center;color:var(--red);font-size:1rem;margin-top:20px;}
 
 /* RESPONSIVO */
 @media(max-width:900px){
-  .calendar{padding:15px;}
-  .day{min-height:120px;}
-  .modal-content{width:95%;max-height:90vh;padding:20px;}
   header h1{font-size:1.6rem;}
+  .calendar{padding:10px 15px;}
+  .day{min-height:80px;font-size:1rem;border-radius:14px;}
+  .day .num{font-size:1.2rem;}
+  .weekdays div{font-size:.75rem;}
+  .modal-content{width:95%;padding:20px;max-height:90vh;}
+  .reserva-item{padding:12px;}
+  .btn-whats{font-size:.85rem;padding:6px 10px;}
+  .calendar-header h2{font-size:1.4rem;}
 }
 </style>
 </head>
@@ -275,25 +285,20 @@ const closeModal=document.getElementById("closeModal");
 const overlay=document.getElementById("overlay");
 let reservas=[],currentDate=new Date();
 
-/* 🔹 Carrega todas as reservas (todos os meses) */
+/* Carrega reservas */
 async function carregarReservas(){
   overlay.style.display="flex";
   try{
     const res=await fetch(GAS_ENDPOINT+"?acao=listarReservas");
     reservas=await res.json();
-    if(!Array.isArray(reservas)||reservas.length===0){
-      throw new Error("Nenhuma reserva encontrada.");
-    }
     overlay.style.display="none";
     renderCalendar();
   }catch(e){
-    overlay.innerHTML=`<div class="loader" style="border-top-color:#ef4444"></div>
-    <div id="errorMsg">❌ Erro ao carregar reservas.<br>${e.message}</div>`;
-    console.error(e);
+    overlay.innerHTML="<div style='color:red;text-align:center'>❌ Erro ao carregar reservas.<br>"+e.message+"</div>";
   }
 }
 
-/* 🔹 Renderiza o mês atual */
+/* Renderiza calendário */
 function renderCalendar(){
   const y=currentDate.getFullYear();
   const m=currentDate.getMonth();
@@ -313,46 +318,42 @@ function renderCalendar(){
     const date=`${y}-${String(m+1).padStart(2,"0")}-${String(d).padStart(2,"0")}`;
     const el=document.createElement("div");
     el.classList.add("day");
-    el.innerHTML=`<div class="num">${d}</div>`;
-
+    el.innerHTML=`<div class='num'>${d}</div>`;
     const list=reservas.filter(r=>r.data===date);
     if(list.length>0){
-      const p=list.filter(r=>r.status==="Pendente").length;
-      const c=list.filter(r=>r.status==="Confirmada").length;
-      if(p>0)el.innerHTML+=`<div class="badge pend">Pend:${p}</div>`;
-      if(c>0)el.innerHTML+=`<div class="badge conf">Conf:${c}</div>`;
+      el.classList.add("reservado");
       el.onclick=()=>abrirModal(date,list);
     }
     daysContainer.appendChild(el);
   }
 }
 
-/* 🔹 Modal grande */
+/* Modal */
 function abrirModal(data,list){
-  modalDate.textContent=new Date(data).toLocaleDateString("pt-BR",{weekday:"long",day:"2-digit",month:"long",year:"numeric"});
+  const dataFormatada=new Date(data).toLocaleDateString("pt-BR",{weekday:"long",day:"2-digit",month:"long",year:"numeric"});
+  modalDate.textContent=dataFormatada.charAt(0).toUpperCase()+dataFormatada.slice(1);
   reservasList.innerHTML="";
   list.forEach(r=>{
     const tel=r.contato?.replace(/\D/g,"");
     reservasList.innerHTML+=`
-      <div class="reserva-item">
+      <div class='reserva-item'>
         <strong>${r.nome}</strong>
         ${r.horario?`<span>🕒 Horário: ${r.horario}</span>`:""}
-        ${r.ocasiao?`<span>🎉 Ocasião: ${r.ocasiao}</span>`:""}
-        ${r.pessoas?`<span>👥 Pessoas: ${r.pessoas}</span>`:""}
+        ${r.pessoas?`<span>👥 ${r.pessoas} pessoa(s)</span>`:""}
         ${r.mesa?`<span>🍽️ Mesa: ${r.mesa}</span>`:""}
-        <span>Status: <b style="color:${r.status==='Pendente'?'#ef4444':'#22c55e'}">${r.status}</b></span>
-        <a class="btn-whats" href="https://wa.me/55${tel}?text=Olá ${encodeURIComponent(r.nome)}! Aqui é da Delícia Gourmet. Confirmando sua reserva para ${r.data}%20às%20${r.horario||''}." target="_blank">💬 WhatsApp</a>
+        ${r.status?`<span>Status: <b style="color:${r.status==="Pendente"?"#ef4444":"#22c55e"}">${r.status}</b></span>`:""}
+        ${tel?`<a class='btn-whats' href='https://wa.me/55${tel}?text=Olá%20${encodeURIComponent(r.nome)}!%20Aqui%20é%20da%20Delícia%20Gourmet.%20Confirmando%20sua%20reserva%20para%20${encodeURIComponent(r.data)}%20às%20${encodeURIComponent(r.horario||"")}' target='_blank'>💬 WhatsApp</a>`:""}
       </div>`;
   });
   modal.classList.add("show");
 }
 closeModal.onclick=()=>modal.classList.remove("show");
 
-/* 🔹 Navegação */
-document.getElementById("prevMonth").onclick=()=>{currentDate.setMonth(currentDate.getMonth()-1);renderCalendar();}
-document.getElementById("nextMonth").onclick=()=>{currentDate.setMonth(currentDate.getMonth()+1);renderCalendar();}
+/* Navegação */
+document.getElementById("prevMonth").onclick=()=>{currentDate.setMonth(currentDate.getMonth()-1);renderCalendar();};
+document.getElementById("nextMonth").onclick=()=>{currentDate.setMonth(currentDate.getMonth()+1);renderCalendar();};
 
-/* 🔹 Inicialização */
+/* Inicialização */
 window.onload=()=>{renderCalendar();carregarReservas();};
 </script>
 </body>
