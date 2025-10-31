@@ -2,190 +2,43 @@
 <html lang="pt-BR">
 <head>
 <meta charset="UTF-8">
-<title>Calendário de Reservas • Delícia Gourmet</title>
+<title>Delícia Gourmet – Calendário de Reservas</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600&family=Inter:wght@400;600&display=swap" rel="stylesheet">
-
 <style>
 :root{
-  --bg:#0b0f19;
-  --card:#151b28;
-  --gold:#d4af37;
-  --accent:#b8860b;
-  --text:#f8fafc;
-  --muted:#a5b1c2;
-  --red:#ef4444;
-  --green:#22c55e;
+  --bg:#0b0f19;--card:#151b28;--gold:#d4af37;--accent:#b8860b;
+  --text:#f8fafc;--muted:#a5b1c2;--red:#ef4444;--green:#22c55e;
   --radius:18px;
 }
-*{margin:0;padding:0;box-sizing:border-box;}
-html,body{
-  height:100%;
-  background:var(--bg);
-  font-family:'Inter',sans-serif;
-  color:var(--text);
-  display:flex;
-  flex-direction:column;
-  overflow:hidden;
-}
-
-/* HEADER */
-header{
-  text-align:center;
-  padding:25px 10px 15px;
-  background:linear-gradient(180deg,rgba(212,175,55,0.1),transparent);
-  box-shadow:0 4px 20px rgba(0,0,0,.4);
-}
-header h1{
-  font-family:'Playfair Display',serif;
-  font-size:1.9rem;
-  color:var(--gold);
-  text-shadow:0 0 15px rgba(212,175,55,.4);
-}
-header p{
-  font-size:1rem;
-  color:var(--muted);
-}
-
-/* CALENDAR */
-.calendar{
-  flex:1;
-  display:flex;
-  flex-direction:column;
-  padding:20px 40px;
-  overflow-y:auto;
-  animation:fadeIn 1s ease;
-}
-.calendar-header{
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-  margin-bottom:25px;
-}
-.calendar-header h2{
-  font-family:'Playfair Display',serif;
-  color:var(--gold);
-  font-size:1.8rem;
-}
-.calendar-header button{
-  background:none;
-  border:none;
-  color:var(--gold);
-  font-size:2rem;
-  cursor:pointer;
-  transition:.2s;
-}
-.calendar-header button:hover{transform:scale(1.2);color:var(--accent);}
-
-/* GRID */
-.weekdays,.days{
-  display:grid;
-  grid-template-columns:repeat(7,1fr);
-  gap:12px;
-  text-align:center;
-}
-.weekdays div{
-  color:var(--muted);
-  font-weight:600;
-  text-transform:uppercase;
-  letter-spacing:.8px;
-}
-.day{
-  background:var(--card);
-  border:1px solid rgba(255,255,255,0.05);
-  border-radius:var(--radius);
-  min-height:100px;
-  display:flex;
-  flex-direction:column;
-  align-items:center;
-  justify-content:flex-start;
-  padding:10px;
-  transition:all .25s;
-  cursor:pointer;
-}
-.day:hover{
-  transform:translateY(-3px);
-  box-shadow:0 0 20px rgba(212,175,55,0.25);
-  border-color:var(--gold);
-}
-.day .num{
-  font-weight:700;
-  font-size:1.2rem;
-  margin-bottom:4px;
-}
-.badge{
-  font-size:.8rem;
-  border-radius:10px;
-  padding:3px 7px;
-  margin-top:4px;
-}
-.badge.pend{background:rgba(239,68,68,.15);color:var(--red);}
-.badge.conf{background:rgba(34,197,94,.15);color:var(--green);}
-.day.disabled{opacity:.2;pointer-events:none;}
-
-/* MODAL */
-#modal{
-  position:fixed;
-  inset:0;
-  background:rgba(0,0,0,.8);
-  display:none;
-  align-items:center;
-  justify-content:center;
-  z-index:99;
-}
-#modal.show{display:flex;}
-.modal-content{
-  background:var(--card);
-  border:1px solid var(--gold);
-  border-radius:var(--radius);
-  padding:25px;
-  width:90%;
-  max-width:500px;
-  max-height:80vh;
-  overflow-y:auto;
-  box-shadow:0 0 40px rgba(0,0,0,.8);
-  animation:fadeInUp .3s ease;
-}
-.modal-content h3{
-  text-align:center;
-  color:var(--gold);
-  font-family:'Playfair Display',serif;
-  margin-bottom:15px;
-}
-.reserva-item{
-  background:var(--bg);
-  border:1px solid var(--gold);
-  border-radius:12px;
-  padding:12px;
-  margin-bottom:12px;
-}
-.reserva-item strong{color:var(--gold);}
-.btn-whats{
-  display:inline-block;
-  background:linear-gradient(90deg,#25D366,#128C7E);
-  color:#fff;
-  text-decoration:none;
-  padding:8px 14px;
-  border-radius:8px;
-  font-weight:600;
-  margin-top:8px;
-}
-.close-btn{
-  display:block;
-  margin:15px auto 0;
-  background:none;
-  border:none;
-  color:var(--muted);
-  cursor:pointer;
-}
-@keyframes fadeIn{from{opacity:0}to{opacity:1}}
-@keyframes fadeInUp{from{opacity:0;transform:translateY(25px);}to{opacity:1;transform:translateY(0);}}
-
-@media(max-width:800px){
-  .calendar{padding:10px 15px;}
-  .day{min-height:80px;}
-  header h1{font-size:1.5rem;}
-}
+*{margin:0;padding:0;box-sizing:border-box}
+html,body{height:100%;background:var(--bg);font-family:'Inter',sans-serif;color:var(--text);display:flex;flex-direction:column}
+header{text-align:center;padding:25px 10px 15px;background:linear-gradient(180deg,rgba(212,175,55,.12),transparent);box-shadow:0 3px 15px rgba(0,0,0,.4)}
+header h1{font-family:'Playfair Display',serif;font-size:2rem;color:var(--gold);text-shadow:0 0 12px rgba(212,175,55,.4)}
+header p{font-size:1rem;color:var(--muted)}
+.calendar{flex:1;display:flex;flex-direction:column;padding:25px 40px;overflow-y:auto}
+.calendar-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:25px}
+.calendar-header h2{font-family:'Playfair Display',serif;color:var(--gold);font-size:1.8rem}
+.calendar-header button{background:none;border:none;color:var(--gold);font-size:2rem;cursor:pointer;transition:.2s}
+.calendar-header button:hover{transform:scale(1.25);color:var(--accent)}
+.weekdays,.days{display:grid;grid-template-columns:repeat(7,1fr);gap:12px;text-align:center}
+.weekdays div{color:var(--muted);font-weight:600;text-transform:uppercase}
+.day{background:var(--card);border:1px solid rgba(255,255,255,.05);border-radius:var(--radius);min-height:100px;display:flex;flex-direction:column;align-items:center;justify-content:flex-start;padding:10px;transition:.25s;cursor:pointer}
+.day:hover{transform:translateY(-3px);box-shadow:0 0 20px rgba(212,175,55,.25);border-color:var(--gold)}
+.day .num{font-weight:700;font-size:1.2rem;margin-bottom:4px}
+.badge{font-size:.8rem;border-radius:10px;padding:3px 7px;margin-top:4px}
+.badge.pend{background:rgba(239,68,68,.15);color:var(--red)}
+.badge.conf{background:rgba(34,197,94,.15);color:var(--green)}
+.day.disabled{opacity:.2;pointer-events:none}
+#modal{position:fixed;inset:0;background:rgba(0,0,0,.8);display:none;align-items:center;justify-content:center;z-index:99}
+#modal.show{display:flex}
+.modal-content{background:var(--card);border:1px solid var(--gold);border-radius:var(--radius);padding:25px;width:90%;max-width:500px;max-height:80vh;overflow-y:auto;box-shadow:0 0 40px rgba(0,0,0,.8)}
+.modal-content h3{text-align:center;color:var(--gold);font-family:'Playfair Display',serif;margin-bottom:15px}
+.reserva-item{background:var(--bg);border:1px solid var(--gold);border-radius:12px;padding:12px;margin-bottom:12px}
+.reserva-item strong{color:var(--gold)}
+.btn-whats{display:inline-block;background:linear-gradient(90deg,#25D366,#128C7E);color:#fff;text-decoration:none;padding:8px 14px;border-radius:8px;font-weight:600;margin-top:8px}
+.close-btn{display:block;margin:15px auto 0;background:none;border:none;color:var(--muted);cursor:pointer}
+@media(max-width:800px){.calendar{padding:10px 15px}.day{min-height:80px}header h1{font-size:1.5rem}}
 </style>
 </head>
 
@@ -216,62 +69,47 @@ header p{
 </div>
 
 <script>
-const GAS_ENDPOINT = "https://script.google.com/macros/s/AKfycbzefjlgLvZ8dCSdAUbcPC9PBpWMAZWvCDxs7jpQzm6WfiKLriWryDVMlIYIwK6NLLJgoA/exec"; // <-- substitua
-const daysContainer = document.getElementById("days");
-const monthYear = document.getElementById("monthYear");
-const modal = document.getElementById("modal");
-const reservasList = document.getElementById("reservasList");
-const modalDate = document.getElementById("modalDate");
-const closeModal = document.getElementById("closeModal");
-
-let reservas = [];
-let currentDate = new Date();
+const GAS_ENDPOINT="https://script.google.com/macros/s/AKfycbwnGV284a3ttZJPTmYZSfW7LU8cxuPpY5-ANqEle5hDLPolO_SchAgKnoBIa_lvS-6hig/exec";
+const daysContainer=document.getElementById("days");
+const monthYear=document.getElementById("monthYear");
+const modal=document.getElementById("modal");
+const reservasList=document.getElementById("reservasList");
+const modalDate=document.getElementById("modalDate");
+const closeModal=document.getElementById("closeModal");
+let reservas=[],currentDate=new Date();
 
 async function carregarReservas(){
   try{
-    const res = await fetch(GAS_ENDPOINT + "?acao=listarReservas");
-    reservas = await res.json();
-    renderCalendar();
-  }catch(err){console.error("Erro ao carregar reservas",err);}
+    const res=await fetch(GAS_ENDPOINT+"?acao=listarReservas");
+    reservas=await res.json();renderCalendar();
+  }catch(e){console.error(e);}
 }
 
 function renderCalendar(){
-  const year=currentDate.getFullYear();
-  const month=currentDate.getMonth();
-  const firstDay=new Date(year,month,1);
-  const lastDay=new Date(year,month+1,0);
-  const monthNames=["Janeiro","Fevereiro","Março","Abril","Maio","Junho","Julho","Agosto","Setembro","Outubro","Novembro","Dezembro"];
-  monthYear.textContent=`${monthNames[month]} ${year}`;
-  daysContainer.innerHTML="";
-
-  const startDay=firstDay.getDay();
-  for(let i=0;i<startDay;i++){
-    const empty=document.createElement("div");
-    empty.classList.add("day","disabled");
-    daysContainer.appendChild(empty);
-  }
-
-  for(let d=1;d<=lastDay.getDate();d++){
-    const dateStr=`${year}-${String(month+1).padStart(2,"0")}-${String(d).padStart(2,"0")}`;
-    const dayEl=document.createElement("div");
-    dayEl.classList.add("day");
-    dayEl.innerHTML=`<div class="num">${d}</div>`;
-    const reservasDia=reservas.filter(r=>r.data===dateStr);
-    if(reservasDia.length>0){
-      const pend=reservasDia.filter(r=>r.status==="Pendente").length;
-      const conf=reservasDia.filter(r=>r.status==="Confirmada").length;
-      if(pend>0)dayEl.innerHTML+=`<div class="badge pend">Pend: ${pend}</div>`;
-      if(conf>0)dayEl.innerHTML+=`<div class="badge conf">Conf: ${conf}</div>`;
-      dayEl.addEventListener("click",()=>abrirModal(dateStr,reservasDia));
+  const y=currentDate.getFullYear(),m=currentDate.getMonth();
+  const first=new Date(y,m,1),last=new Date(y,m+1,0);
+  const names=["Janeiro","Fevereiro","Março","Abril","Maio","Junho","Julho","Agosto","Setembro","Outubro","Novembro","Dezembro"];
+  monthYear.textContent=`${names[m]} ${y}`;daysContainer.innerHTML="";
+  const start=first.getDay();
+  for(let i=0;i<start;i++){const e=document.createElement("div");e.classList.add("day","disabled");daysContainer.appendChild(e);}
+  for(let d=1;d<=last.getDate();d++){
+    const date=`${y}-${String(m+1).padStart(2,"0")}-${String(d).padStart(2,"0")}`;
+    const el=document.createElement("div");el.classList.add("day");el.innerHTML=`<div class="num">${d}</div>`;
+    const list=reservas.filter(r=>r.data===date);
+    if(list.length>0){
+      const p=list.filter(r=>r.status==="Pendente").length,c=list.filter(r=>r.status==="Confirmada").length;
+      if(p>0)el.innerHTML+=`<div class="badge pend">Pend:${p}</div>`;
+      if(c>0)el.innerHTML+=`<div class="badge conf">Conf:${c}</div>`;
+      el.onclick=()=>abrirModal(date,list);
     }
-    daysContainer.appendChild(dayEl);
+    daysContainer.appendChild(el);
   }
 }
 
-function abrirModal(data,reservasDia){
-  modalDate.textContent=new Date(data).toLocaleDateString("pt-BR",{weekday:'long',day:'2-digit',month:'long',year:'numeric'});
+function abrirModal(data,list){
+  modalDate.textContent=new Date(data).toLocaleDateString("pt-BR",{weekday:"long",day:"2-digit",month:"long",year:"numeric"});
   reservasList.innerHTML="";
-  reservasDia.forEach(r=>{
+  list.forEach(r=>{
     const tel=r.contato?.replace(/\D/g,"");
     reservasList.innerHTML+=`
       <div class="reserva-item">
@@ -281,12 +119,12 @@ function abrirModal(data,reservasDia){
         ${r.pessoas?"👥 "+r.pessoas+" pessoas<br>":""}
         ${r.mesa?"🍽️ Mesa: "+r.mesa+"<br>":""}
         <span>Status: <b style="color:${r.status==='Pendente'?'#ef4444':'#22c55e'}">${r.status}</b></span><br>
-        <a class="btn-whats" href="https://wa.me/55${tel}?text=Olá%20${encodeURIComponent(r.nome)}!%20Aqui%20é%20da%20Delícia%20Gourmet.%20Confirmando%20sua%20reserva%20para%20${r.data}%20às%20${r.horario||''}." target="_blank">💬 WhatsApp</a>
+        <a class="btn-whats" href="https://wa.me/55${tel}?text=Olá ${encodeURIComponent(r.nome)}! Aqui é da Delícia Gourmet. Confirmando sua reserva para ${r.data} às ${r.horario||''}." target="_blank">💬 WhatsApp</a>
       </div>`;
   });
   modal.classList.add("show");
 }
-closeModal.addEventListener("click",()=>modal.classList.remove("show"));
+closeModal.onclick=()=>modal.classList.remove("show");
 document.getElementById("prevMonth").onclick=()=>{currentDate.setMonth(currentDate.getMonth()-1);renderCalendar();}
 document.getElementById("nextMonth").onclick=()=>{currentDate.setMonth(currentDate.getMonth()+1);renderCalendar();}
 carregarReservas();
