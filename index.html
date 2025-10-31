@@ -253,7 +253,6 @@ function abrirModal(data,list){
         ${r.horario?`<span>🕒 Horário: ${r.horario}</span>`:""}
         ${r.pessoas?`<span>👥 ${r.pessoas} pessoa(s)</span>`:""}
         ${r.mesa?`<span>🍽️ Mesa: ${r.mesa}</span>`:""}
-        ${r.status?`<span>Status: <b style="color:${r.status==="Pendente"?"#ef4444":"#22c55e"}">${r.status}</b></span>`:""}
         ${criacao?`<div class="criado">🕓 Criado em ${criacao}</div>`:""}
         ${tel?`<a class='btn-whats' href='https://wa.me/55${tel}?text=Olá%20${encodeURIComponent(r.nome)}!%20Aqui%20é%20da%20Delícia%20Gourmet.%20Confirmando%20sua%20reserva%20para%20${encodeURIComponent(r.data)}%20às%20${encodeURIComponent(r.horario||"")}' target='_blank'>💬 WhatsApp</a>`:""}
       </div>`;
