@@ -5,7 +5,6 @@
 <title>Delícia Gourmet – Calendário de Reservas</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600&family=Inter:wght@400;600&display=swap" rel="stylesheet">
-
 <style>
 :root {
   --bg:#0b0f19;--card:#151b28;--gold:#d4af37;--accent:#b8860b;
@@ -21,136 +20,48 @@ html,body{
   display:flex;
   flex-direction:column;
   overflow:hidden;
-  -webkit-tap-highlight-color:transparent;
 }
-
-/* HEADER */
 header{
-  text-align:center;
-  padding:20px 0 10px;
+  text-align:center;padding:20px 0 10px;
   background:linear-gradient(180deg,rgba(212,175,55,.12),transparent);
   box-shadow:0 3px 15px rgba(0,0,0,.4);
 }
-header h1{
-  font-family:'Playfair Display',serif;
-  font-size:2rem;
-  color:var(--gold);
-}
+header h1{font-family:'Playfair Display',serif;font-size:2rem;color:var(--gold);}
 header p{color:var(--muted);font-size:1rem}
-
-/* CALENDÁRIO */
-.calendar{
-  flex:1;
-  display:flex;
-  flex-direction:column;
-  padding:20px 40px;
-  overflow-y:auto;
-}
-.calendar-header{
-  display:flex;justify-content:space-between;align-items:center;margin-bottom:25px;
-}
-.calendar-header h2{
-  font-family:'Playfair Display',serif;
-  color:var(--gold);
-  font-size:1.8rem;
-}
-.calendar-header button{
-  background:none;border:none;color:var(--gold);font-size:2rem;cursor:pointer;transition:.2s;
-}
-.calendar-header button:hover{transform:scale(1.25);color:var(--accent);}
-
-/* GRID */
+.calendar{flex:1;display:flex;flex-direction:column;padding:20px 40px;overflow-y:auto;}
+.calendar-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:25px;}
+.calendar-header h2{font-family:'Playfair Display',serif;color:var(--gold);font-size:1.8rem;}
+.calendar-header button{background:none;border:none;color:var(--gold);font-size:2rem;cursor:pointer;}
 .weekdays,.days{display:grid;grid-template-columns:repeat(7,1fr);gap:14px;text-align:center;}
 .weekdays div{color:var(--muted);font-weight:600;text-transform:uppercase;font-size:.85rem;}
-.day{
-  background:var(--card);
-  border:1px solid rgba(255,255,255,.05);
-  border-radius:var(--radius);
-  min-height:120px;
-  display:flex;flex-direction:column;align-items:center;justify-content:flex-start;
-  padding:10px;transition:all .25s;cursor:pointer;position:relative;
-}
+.day{background:var(--card);border:1px solid rgba(255,255,255,.05);border-radius:var(--radius);
+  min-height:120px;display:flex;flex-direction:column;align-items:center;justify-content:flex-start;
+  padding:10px;transition:.25s;cursor:pointer;position:relative;}
 .day:hover{transform:translateY(-3px);border-color:var(--gold);box-shadow:0 0 20px rgba(212,175,55,.25);}
 .day .num{font-weight:700;font-size:1.4rem;margin-bottom:6px;}
-.day.reservado{
-  background:#fff;color:#000;font-weight:600;animation:pulse 1.8s infinite;
-}
-.day.reservado .nomes{margin-top:4px;font-size:.8rem;line-height:1.1rem;color:#000;font-weight:500;text-align:center;}
-@keyframes pulse{
-  0%{box-shadow:0 0 0 rgba(255,255,255,.3);}
-  50%{box-shadow:0 0 20px rgba(255,255,255,.7);}
-  100%{box-shadow:0 0 0 rgba(255,255,255,.3);}
-}
-
-/* MODAL */
-#modal{
-  position:fixed;inset:0;background:rgba(0,0,0,.8);
-  display:none;align-items:center;justify-content:center;z-index:99;padding:20px;
-}
-#modal.show{display:flex;animation:fadeIn .3s ease}
-@keyframes fadeIn{from{opacity:0;transform:scale(.95)}to{opacity:1;transform:scale(1)}}
-.modal-content{
-  background:var(--card);
-  border:1px solid var(--gold);
-  border-radius:var(--radius);
-  padding:25px 35px;width:90%;max-width:800px;max-height:85vh;overflow-y:auto;
-  box-shadow:0 0 60px rgba(212,175,55,.25);
-}
-.modal-content h3{
-  text-align:center;
-  color:var(--gold);
-  font-family:'Playfair Display',serif;
-  font-size:1.4rem;
-  margin-bottom:20px;
-  border-bottom:1px solid rgba(255,255,255,.1);
-  padding-bottom:8px;
-  text-transform:capitalize;
-}
-.reserva-item{
-  background:var(--bg);
-  border:1px solid rgba(212,175,55,.3);
-  border-radius:12px;
-  padding:16px;
-  margin-bottom:14px;
-}
+.day.reservado{background:#fff;color:#000;font-weight:600;animation:pulse 1.8s infinite;}
+.day.reservado .nomes{margin-top:4px;font-size:.8rem;line-height:1.1rem;color:#000;font-weight:500;}
+@keyframes pulse{0%{box-shadow:0 0 0 rgba(255,255,255,.3);}50%{box-shadow:0 0 20px rgba(255,255,255,.7);}100%{box-shadow:0 0 0 rgba(255,255,255,.3);}}
+#modal{position:fixed;inset:0;background:rgba(0,0,0,.8);display:none;align-items:center;justify-content:center;z-index:99;padding:20px;}
+#modal.show{display:flex;}
+.modal-content{background:var(--card);border:1px solid var(--gold);border-radius:var(--radius);
+  padding:25px 35px;width:90%;max-width:800px;max-height:85vh;overflow-y:auto;box-shadow:0 0 60px rgba(212,175,55,.25);}
+.modal-content h3{text-align:center;color:var(--gold);font-family:'Playfair Display',serif;font-size:1.4rem;margin-bottom:20px;}
+.reserva-item{background:var(--bg);border:1px solid rgba(212,175,55,.3);border-radius:12px;padding:16px;margin-bottom:14px;}
 .reserva-item strong{color:var(--gold);font-size:1.1rem;}
 .reserva-item span{display:block;margin-top:6px;font-size:.95rem;color:var(--muted);}
-.reserva-item .criado{color:var(--gold);font-size:.85rem;margin-top:8px;font-style:italic;}
-.btn-whats{
-  display:inline-block;
-  background:linear-gradient(90deg,#25D366,#128C7E);
-  color:#fff;text-decoration:none;padding:8px 14px;
-  border-radius:8px;font-weight:600;margin-top:10px;transition:.2s;font-size:.9rem;
-}
-.btn-whats:hover{opacity:.9;transform:scale(1.03);}
-.close-btn{
-  display:block;margin:18px auto 0;background:none;
-  border:1px solid var(--muted);color:var(--muted);
-  border-radius:10px;padding:8px 18px;cursor:pointer;transition:.3s;
-}
-.close-btn:hover{color:var(--gold);border-color:var(--gold);}
-#overlay{
-  position:fixed;inset:0;background:rgba(11,15,25,.95);
-  display:flex;flex-direction:column;align-items:center;justify-content:center;
-  color:var(--gold);font-family:'Playfair Display',serif;font-size:1.4rem;z-index:999;
-}
-.loader{
-  border:5px solid rgba(255,255,255,.1);border-top:5px solid var(--gold);
-  border-radius:50%;width:60px;height:60px;animation:spin 1s linear infinite;margin-bottom:20px;
-}
+.btn-whats{display:inline-block;background:linear-gradient(90deg,#25D366,#128C7E);color:#fff;text-decoration:none;
+  padding:8px 14px;border-radius:8px;font-weight:600;margin-top:10px;}
+.close-btn{display:block;margin:18px auto 0;background:none;border:1px solid var(--muted);color:var(--muted);
+  border-radius:10px;padding:8px 18px;cursor:pointer;}
+.edit-btn{display:block;margin:18px auto 0;background:var(--accent);color:#fff;
+  border:none;border-radius:10px;padding:10px 20px;font-weight:600;cursor:pointer;}
+#overlay{position:fixed;inset:0;background:rgba(11,15,25,.95);display:flex;flex-direction:column;align-items:center;justify-content:center;color:var(--gold);}
+.loader{border:5px solid rgba(255,255,255,.1);border-top:5px solid var(--gold);border-radius:50%;width:60px;height:60px;animation:spin 1s linear infinite;margin-bottom:20px;}
 @keyframes spin{to{transform:rotate(360deg)}}
-
-/* RESPONSIVO */
-@media(max-width:900px){
-  .calendar{padding:10px;}
-  .day{min-height:90px;font-size:1rem;}
-  .day .num{font-size:1.2rem;}
-  .modal-content{width:95%;padding:20px;}
-  .btn-whats{font-size:.85rem;}
-}
+@media(max-width:900px){.calendar{padding:10px;}.day{min-height:90px;}.modal-content{width:95%;padding:20px;}}
 </style>
 </head>
-
 <body>
 <header>
   <h1>Delícia Gourmet</h1>
@@ -169,21 +80,21 @@ header p{color:var(--muted);font-size:1rem}
   <div class="days" id="days"></div>
 </div>
 
-<div id="overlay">
-  <div class="loader"></div>
-  <div>Carregando reservas...</div>
-</div>
+<div id="overlay"><div class="loader"></div><div>Carregando reservas...</div></div>
 
 <div id="modal">
   <div class="modal-content">
     <h3 id="modalDate">Reservas do dia</h3>
     <div id="reservasList"></div>
+    <button class="edit-btn" id="editarBtn">Editar Reservas</button>
     <button class="close-btn" id="closeModal">Fechar</button>
   </div>
 </div>
 
 <script>
 const GAS_ENDPOINT="https://script.google.com/macros/s/AKfycbw-94H4fvRldXiDqiif0qDhZX-DuqBRaMvamB_v4MamvY6E8xyMIZxZx94OdFQwJ1TpGQ/exec";
+const ADMIN_SENHA="12345"; // 🔐 senha para editar
+let reservas=[],currentDate=new Date();
 const daysContainer=document.getElementById("days");
 const monthYear=document.getElementById("monthYear");
 const modal=document.getElementById("modal");
@@ -191,9 +102,9 @@ const reservasList=document.getElementById("reservasList");
 const modalDate=document.getElementById("modalDate");
 const closeModal=document.getElementById("closeModal");
 const overlay=document.getElementById("overlay");
-let reservas=[],currentDate=new Date();
+const editarBtn=document.getElementById("editarBtn");
 
-/* Carrega reservas */
+/* ====== CARREGAR RESERVAS ====== */
 async function carregarReservas(){
   overlay.style.display="flex";
   try{
@@ -202,87 +113,95 @@ async function carregarReservas(){
     overlay.style.display="none";
     renderCalendar();
   }catch(e){
-    overlay.innerHTML="<div style='color:red;text-align:center'>❌ Erro ao carregar reservas.<br>"+e.message+"</div>";
+    overlay.innerHTML="<div style='color:red;text-align:center'>❌ Erro: "+e.message+"</div>";
   }
 }
 
-/* Renderiza calendário */
+/* ====== CALENDÁRIO ====== */
 function renderCalendar(){
   const y=currentDate.getFullYear();
   const m=currentDate.getMonth();
   const first=new Date(y,m,1),last=new Date(y,m+1,0);
-  const names=["Janeiro","Fevereiro","Março","Abril","Maio","Junho","Julho","Agosto","Setembro","Outubro","Novembro","Dezembro"];
-  monthYear.textContent=`${names[m]} ${y}`;
+  const months=["Janeiro","Fevereiro","Março","Abril","Maio","Junho","Julho","Agosto","Setembro","Outubro","Novembro","Dezembro"];
+  monthYear.textContent=`${months[m]} ${y}`;
   daysContainer.innerHTML="";
-  const start=first.getDay();
-
-  for(let i=0;i<start;i++){
-    const empty=document.createElement("div");
-    empty.classList.add("day","disabled");
-    daysContainer.appendChild(empty);
-  }
-
+  for(let i=0;i<first.getDay();i++)daysContainer.innerHTML+="<div></div>";
   for(let d=1;d<=last.getDate();d++){
     const date=`${y}-${String(m+1).padStart(2,"0")}-${String(d).padStart(2,"0")}`;
+    const list=reservas.filter(r=>r.data===date);
     const el=document.createElement("div");
     el.classList.add("day");
     el.innerHTML=`<div class='num'>${d}</div>`;
-    const list=reservas.filter(r=>r.data===date);
     if(list.length>0){
       el.classList.add("reservado");
-      const nomes=list.map(r=>r.nome.split(" ")[0]).slice(0,3).join(", ");
-      const extra=list.length>3?"...":"";
-      el.innerHTML+=`<div class="nomes">${nomes}${extra}</div>`;
+      el.innerHTML+=`<div class="nomes">${list.map(r=>r.nome.split(" ")[0]).slice(0,3).join(", ")}${list.length>3?"...":""}</div>`;
       el.onclick=()=>abrirModal(date,list);
     }
     daysContainer.appendChild(el);
   }
 }
 
-/* Modal */
+/* ====== MODAL ====== */
 function abrirModal(data,list){
-  const dataFormatada=new Date(data).toLocaleDateString("pt-BR",{weekday:"long",day:"2-digit",month:"long",year:"numeric"});
-  modalDate.textContent=dataFormatada.charAt(0).toUpperCase()+dataFormatada.slice(1);
+  const dataFormatada=new Date(data).toLocaleDateString("pt-BR",{weekday:"long",day:"2-digit",month:"long"});
+  modalDate.textContent=dataFormatada;
   reservasList.innerHTML="";
-  list.forEach(r=>{
-    const tel=r.contato?.replace(/\D/g,"");
-    const criacao=formatarDataHora(r.criadoEm||r.carimbo);
+  list.forEach((r,i)=>{
     reservasList.innerHTML+=`
-      <div class='reserva-item'>
+      <div class='reserva-item' data-index='${i}'>
         <strong>${r.nome}</strong>
-        ${r.horario?`<span>🕒 Horário: ${r.horario}</span>`:""}
-        ${r.pessoas?`<span>👥 ${r.pessoas} pessoa(s)</span>`:""}
-        ${r.mesa?`<span>🍽️ Mesa: ${r.mesa}</span>`:""}
-        ${criacao?`<div class="criado">🕓 Criado em ${criacao}</div>`:""}
-        ${tel?`<a class='btn-whats' href='https://wa.me/55${tel}?text=Olá%20${encodeURIComponent(r.nome)}!%20Aqui%20é%20da%20Delícia%20Gourmet.%20Confirmando%20sua%20reserva%20para%20${encodeURIComponent(r.data)}%20às%20${encodeURIComponent(r.horario||"")}' target='_blank'>💬 WhatsApp</a>`:""}
+        <span>🕒 ${r.horario||""}</span>
+        <span>👥 ${r.pessoas||""}</span>
+        <span>🍽️ Mesa ${r.mesa||""}</span>
       </div>`;
   });
+  modal.dataset.data=data;
   modal.classList.add("show");
 }
 closeModal.onclick=()=>modal.classList.remove("show");
 
-/* Formata data/hora da criação */
-function formatarDataHora(valor){
-  if(!valor)return"";
-  const d=new Date(valor);
-  if(!isNaN(d)){
-    const dia=d.toLocaleDateString("pt-BR",{day:"2-digit",month:"long",year:"numeric"});
-    const hora=d.toLocaleTimeString("pt-BR",{hour:"2-digit",minute:"2-digit"});
-    return `${dia} às ${hora}`;
-  }
-  const [data,hora]=valor.split(" ");
-  if(!data)return"";
-  const [ano,mes,dia]=data.split("-");
-  const meses=["janeiro","fevereiro","março","abril","maio","junho","julho","agosto","setembro","outubro","novembro","dezembro"];
-  return `${dia} de ${meses[parseInt(mes)-1]} de ${ano} às ${hora?.slice(0,5)}`;
+/* ====== EDIÇÃO ====== */
+editarBtn.onclick=()=>{
+  const senha=prompt("Digite a senha de administrador:");
+  if(senha!==ADMIN_SENHA){alert("Senha incorreta.");return;}
+  const dia=modal.dataset.data;
+  const list=reservas.filter(r=>r.data===dia);
+  reservasList.innerHTML="";
+  list.forEach((r,i)=>{
+    reservasList.innerHTML+=`
+      <div class='reserva-item'>
+        <label>Nome:<input id='nome${i}' value='${r.nome}'></label><br>
+        <label>Horário:<input id='hora${i}' value='${r.horario||""}'></label><br>
+        <label>Pessoas:<input id='pess${i}' value='${r.pessoas||""}'></label><br>
+        <label>Mesa:<input id='mesa${i}' value='${r.mesa||""}'></label><br>
+        <button onclick='salvar(${i},"${dia}")'>Salvar</button>
+      </div>`;
+  });
+};
+
+async function salvar(i,dia){
+  const nome=document.getElementById(`nome${i}`).value;
+  const horario=document.getElementById(`hora${i}`).value;
+  const pessoas=document.getElementById(`pess${i}`).value;
+  const mesa=document.getElementById(`mesa${i}`).value;
+  const payload={acao:"editarReserva",data:dia,nome,horario,pessoas,mesa};
+  const res=await fetch(GAS_ENDPOINT,{
+    method:"POST",
+    headers:{"Content-Type":"application/json"},
+    body:JSON.stringify(payload)
+  });
+  const json=await res.json();
+  alert(json.mensagem||"Alteração salva!");
+  carregarReservas();
+  modal.classList.remove("show");
 }
 
-/* Navegação */
+/* ====== NAVEGAÇÃO ====== */
 document.getElementById("prevMonth").onclick=()=>{currentDate.setMonth(currentDate.getMonth()-1);renderCalendar();};
 document.getElementById("nextMonth").onclick=()=>{currentDate.setMonth(currentDate.getMonth()+1);renderCalendar();};
 
-/* Inicialização */
-window.onload=()=>{renderCalendar();carregarReservas();};
+/* ====== INÍCIO ====== */
+window.onload=()=>{carregarReservas();};
 </script>
 </body>
 </html>
