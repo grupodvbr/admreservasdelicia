@@ -29,21 +29,22 @@ header p{color:var(--muted);font-size:1rem}
 @keyframes pulse{0%{box-shadow:0 0 0 rgba(255,255,255,.3);}50%{box-shadow:0 0 20px rgba(255,255,255,.7);}100%{box-shadow:0 0 0 rgba(255,255,255,.3);}}
 #modal{position:fixed;inset:0;background:rgba(0,0,0,.85);display:none;align-items:center;justify-content:center;z-index:99;padding:20px;}
 #modal.show{display:flex;}
-.modal-content{background:var(--card);border:1px solid var(--gold);border-radius:var(--radius);padding:25px 35px;width:90%;max-width:850px;max-height:85vh;overflow-y:auto;box-shadow:0 0 60px rgba(212,175,55,.25);}
+.modal-content{background:var(--card);border:1px solid var(--gold);border-radius:var(--radius);padding:25px 35px;width:90%;max-width:900px;max-height:85vh;overflow-y:auto;box-shadow:0 0 60px rgba(212,175,55,.25);}
 .modal-content h3{text-align:center;color:var(--gold);font-family:'Playfair Display',serif;font-size:1.4rem;margin-bottom:20px;}
-.reserva-item{background:var(--bg);border:1px solid rgba(212,175,55,.3);border-radius:12px;padding:16px;margin-bottom:14px;}
-.reserva-item label{display:block;color:var(--gold);margin-top:6px;font-size:.9rem}
-.reserva-item input{width:100%;background:var(--card);border:1px solid rgba(255,255,255,.1);border-radius:8px;padding:6px 8px;color:var(--text);margin-top:3px;}
-.btn{border:none;border-radius:8px;padding:8px 14px;margin-top:8px;cursor:pointer;font-weight:600}
-.btn-edit{background:var(--accent);color:#fff}
-.btn-del{background:var(--red);color:#fff;margin-left:6px}
+.reserva-item{background:var(--bg);border:1px solid rgba(212,175,55,.3);border-radius:12px;padding:16px;margin-bottom:14px;display:flex;flex-wrap:wrap;align-items:center;gap:8px;line-height:1.6;}
+.reserva-item strong{color:var(--gold);font-size:1rem;margin-right:6px;}
+.reserva-item span{color:var(--muted);font-size:.95rem;}
+.reserva-item .label{color:var(--gold);font-weight:600;}
+.btn{border:none;border-radius:8px;padding:6px 12px;margin-left:6px;cursor:pointer;font-weight:600;font-size:.9rem}
+.btn-edit{background:var(--accent);color:#fff;}
+.btn-del{background:var(--red);color:#fff;}
 .close-btn{display:block;margin:18px auto 0;background:none;border:1px solid var(--muted);color:var(--muted);border-radius:10px;padding:8px 18px;cursor:pointer;}
 #overlay{position:fixed;inset:0;background:rgba(11,15,25,.95);display:flex;flex-direction:column;align-items:center;justify-content:center;color:var(--gold);z-index:999;}
 .loader{border:5px solid rgba(255,255,255,.1);border-top:5px solid var(--gold);border-radius:50%;width:60px;height:60px;animation:spin 1s linear infinite;margin-bottom:20px;}
 @keyframes spin{to{transform:rotate(360deg)}}
 .success{color:var(--green);font-size:1.3rem;animation:fadeOut 2s forwards;}
 @keyframes fadeOut{0%{opacity:1;}90%{opacity:1;}100%{opacity:0;}}
-@media(max-width:900px){.calendar{padding:10px;}.day{min-height:90px;}.modal-content{width:95%;padding:20px;}}
+@media(max-width:900px){.calendar{padding:10px;}.day{min-height:90px;}.modal-content{width:95%;padding:20px;}.reserva-item{flex-direction:column;align-items:flex-start;}}
 </style>
 </head>
 <body>
@@ -80,7 +81,6 @@ modal=document.getElementById("modal"),reservasList=document.getElementById("res
 modalDate=document.getElementById("modalDate"),closeModal=document.getElementById("closeModal"),
 overlay=document.getElementById("overlay");
 
-/* === Carregar Reservas === */
 async function carregarReservas(){
   overlay.style.display="flex";
   try{
@@ -93,7 +93,6 @@ async function carregarReservas(){
   overlay.style.display="none";
 }
 
-/* === Renderizar Calendário === */
 function renderCalendar(){
   const y=currentDate.getFullYear(),m=currentDate.getMonth();
   const first=new Date(y,m,1),last=new Date(y,m+1,0);
@@ -115,24 +114,23 @@ function renderCalendar(){
   }
 }
 
-/* === Modal === */
 function abrirModal(data,list){
   const dataFormatada=new Date(data).toLocaleDateString("pt-BR",{weekday:"long",day:"2-digit",month:"long"});
   modalDate.textContent=dataFormatada;
   reservasList.innerHTML="";
-  list.forEach((r,i)=>{
+  list.forEach(r=>{
     reservasList.innerHTML+=`
       <div class='reserva-item'>
         <strong>${r.nome}</strong>
-        <span>🕒 Horário: ${r.horario||"-"}</span>
-        <span>👥 Pessoas: ${r.pessoas||"-"}</span>
-        <span>🍽️ Mesa: ${r.mesa||"-"}</span>
-        <span>🎉 Ocasião: ${r.ocasiao||"-"}</span>
-        <span>💐 Decoração: ${r.decoracao||"-"}</span>
-        <span>📋 Comanda: ${r.comanda||"-"}</span>
-        <span>📞 Contato: ${r.contato||"-"}</span>
-        <span>📧 E-mail: ${r.email||"-"}</span>
-        <span>📅 Status: ${r.status||"-"}</span>
+        <span>🕒 <span class="label">Horário:</span> ${r.horario||"-"}</span>
+        <span>👥 <span class="label">Pessoas:</span> ${r.pessoas||"-"}</span>
+        <span>🍽️ <span class="label">Mesa:</span> ${r.mesa||"-"}</span>
+        <span>🎉 <span class="label">Ocasião:</span> ${r.ocasiao||"-"}</span>
+        <span>💐 <span class="label">Decoração:</span> ${r.decoracao||"-"}</span>
+        <span>📋 <span class="label">Comanda:</span> ${r.comanda||"-"}</span>
+        <span>📞 <span class="label">Contato:</span> ${r.contato||"-"}</span>
+        <span>📧 <span class="label">E-mail:</span> ${r.email||"-"}</span>
+        <span>📅 <span class="label">Status:</span> ${r.status||"-"}</span>
         <button class='btn btn-edit' onclick="editar('${data}','${r.nome}')">Editar</button>
         <button class='btn btn-del' onclick="excluir('${data}','${r.nome}')">Excluir</button>
       </div>`;
@@ -142,13 +140,12 @@ function abrirModal(data,list){
 }
 closeModal.onclick=()=>modal.classList.remove("show");
 
-/* === Editar === */
 function editar(data,nome){
   const senha=prompt("Senha de administrador:");
   if(senha!==ADMIN_SENHA)return alert("Senha incorreta.");
   const r=reservas.find(x=>x.data===data && x.nome===nome);
   reservasList.innerHTML=`
-    <div class='reserva-item'>
+    <div class='reserva-item' style="flex-direction:column;align-items:flex-start;">
       <label>Nome:<input id='nome' value='${r.nome}'></label>
       <label>Horário:<input id='hora' value='${r.horario||""}'></label>
       <label>Pessoas:<input id='pessoas' value='${r.pessoas||""}'></label>
@@ -163,15 +160,11 @@ function editar(data,nome){
     </div>`;
 }
 
-/* === Salvar === */
 async function salvar(data,nomeAntigo){
   overlay.innerHTML="<div class='loader'></div><div>Salvando...</div>";
   overlay.style.display="flex";
   const payload={
-    acao:"editarReserva",
-    senha:ADMIN_SENHA,
-    data,
-    nomeAntigo,
+    acao:"editarReserva",senha:ADMIN_SENHA,data,nomeAntigo,
     nome:document.getElementById("nome").value,
     horario:document.getElementById("hora").value,
     pessoas:document.getElementById("pessoas").value,
@@ -189,7 +182,6 @@ async function salvar(data,nomeAntigo){
   setTimeout(()=>{overlay.style.display="none";carregarReservas();modal.classList.remove("show");},1500);
 }
 
-/* === Excluir === */
 async function excluir(data,nome){
   if(!confirm(`Excluir reserva de ${nome}?`))return;
   overlay.innerHTML="<div class='loader'></div><div>Excluindo...</div>";
@@ -201,11 +193,8 @@ async function excluir(data,nome){
   setTimeout(()=>{overlay.style.display="none";carregarReservas();modal.classList.remove("show");},1500);
 }
 
-/* === Navegação === */
 document.getElementById("prevMonth").onclick=()=>{currentDate.setMonth(currentDate.getMonth()-1);renderCalendar();};
 document.getElementById("nextMonth").onclick=()=>{currentDate.setMonth(currentDate.getMonth()+1);renderCalendar();};
-
-/* === Inicialização === */
 window.onload=()=>carregarReservas();
 </script>
 </body>
