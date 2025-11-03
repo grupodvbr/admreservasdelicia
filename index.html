@@ -13,19 +13,10 @@
 }
 *{margin:0;padding:0;box-sizing:border-box}
 html,body{
-  height:100%;
-  background:var(--bg);
-  font-family:'Inter',sans-serif;
-  color:var(--text);
-  display:flex;
-  flex-direction:column;
-  overflow:hidden;
+  height:100%;background:var(--bg);font-family:'Inter',sans-serif;
+  color:var(--text);display:flex;flex-direction:column;overflow:hidden;
 }
-header{
-  text-align:center;padding:20px 0 10px;
-  background:linear-gradient(180deg,rgba(212,175,55,.12),transparent);
-  box-shadow:0 3px 15px rgba(0,0,0,.4);
-}
+header{text-align:center;padding:20px 0 10px;background:linear-gradient(180deg,rgba(212,175,55,.12),transparent);box-shadow:0 3px 15px rgba(0,0,0,.4);}
 header h1{font-family:'Playfair Display',serif;font-size:2rem;color:var(--gold);}
 header p{color:var(--muted);font-size:1rem}
 .calendar{flex:1;display:flex;flex-direction:column;padding:20px 40px;overflow-y:auto;}
@@ -36,37 +27,31 @@ header p{color:var(--muted);font-size:1rem}
 .weekdays div{color:var(--muted);font-weight:600;text-transform:uppercase;font-size:.85rem;}
 .day{background:var(--card);border:1px solid rgba(255,255,255,.05);border-radius:var(--radius);
   min-height:120px;display:flex;flex-direction:column;align-items:center;justify-content:flex-start;
-  padding:10px;transition:.25s;cursor:pointer;position:relative;}
+  padding:10px;transition:.25s;cursor:pointer;}
 .day:hover{transform:translateY(-3px);border-color:var(--gold);box-shadow:0 0 20px rgba(212,175,55,.25);}
-.day .num{font-weight:700;font-size:1.4rem;margin-bottom:6px;}
 .day.reservado{background:#fff;color:#000;font-weight:600;animation:pulse 1.8s infinite;}
 .day.reservado .nomes{margin-top:4px;font-size:.8rem;line-height:1.1rem;color:#000;font-weight:500;}
 @keyframes pulse{0%{box-shadow:0 0 0 rgba(255,255,255,.3);}50%{box-shadow:0 0 20px rgba(255,255,255,.7);}100%{box-shadow:0 0 0 rgba(255,255,255,.3);}}
 #modal{position:fixed;inset:0;background:rgba(0,0,0,.8);display:none;align-items:center;justify-content:center;z-index:99;padding:20px;}
 #modal.show{display:flex;}
 .modal-content{background:var(--card);border:1px solid var(--gold);border-radius:var(--radius);
-  padding:25px 35px;width:90%;max-width:800px;max-height:85vh;overflow-y:auto;box-shadow:0 0 60px rgba(212,175,55,.25);}
+  padding:25px 35px;width:90%;max-width:850px;max-height:85vh;overflow-y:auto;box-shadow:0 0 60px rgba(212,175,55,.25);}
 .modal-content h3{text-align:center;color:var(--gold);font-family:'Playfair Display',serif;font-size:1.4rem;margin-bottom:20px;}
 .reserva-item{background:var(--bg);border:1px solid rgba(212,175,55,.3);border-radius:12px;padding:16px;margin-bottom:14px;}
 .reserva-item strong{color:var(--gold);font-size:1.1rem;}
 .reserva-item span{display:block;margin-top:6px;font-size:.95rem;color:var(--muted);}
-.btn-whats{display:inline-block;background:linear-gradient(90deg,#25D366,#128C7E);color:#fff;text-decoration:none;
-  padding:8px 14px;border-radius:8px;font-weight:600;margin-top:10px;}
-.close-btn{display:block;margin:18px auto 0;background:none;border:1px solid var(--muted);color:var(--muted);
-  border-radius:10px;padding:8px 18px;cursor:pointer;}
-.edit-btn{display:block;margin:18px auto 0;background:var(--accent);color:#fff;
-  border:none;border-radius:10px;padding:10px 20px;font-weight:600;cursor:pointer;}
-#overlay{position:fixed;inset:0;background:rgba(11,15,25,.95);display:flex;flex-direction:column;align-items:center;justify-content:center;color:var(--gold);}
+.btn-whats{display:inline-block;background:linear-gradient(90deg,#25D366,#128C7E);color:#fff;text-decoration:none;padding:8px 14px;border-radius:8px;font-weight:600;margin-top:10px;}
+.close-btn,.edit-btn{display:block;margin:18px auto 0;border-radius:10px;padding:10px 20px;font-weight:600;cursor:pointer;}
+.edit-btn{background:var(--accent);color:#fff;border:none;}
+.close-btn{background:none;border:1px solid var(--muted);color:var(--muted);}
+#overlay{position:fixed;inset:0;background:rgba(11,15,25,.95);display:flex;flex-direction:column;align-items:center;justify-content:center;color:var(--gold);z-index:999;}
 .loader{border:5px solid rgba(255,255,255,.1);border-top:5px solid var(--gold);border-radius:50%;width:60px;height:60px;animation:spin 1s linear infinite;margin-bottom:20px;}
 @keyframes spin{to{transform:rotate(360deg)}}
 @media(max-width:900px){.calendar{padding:10px;}.day{min-height:90px;}.modal-content{width:95%;padding:20px;}}
 </style>
 </head>
 <body>
-<header>
-  <h1>Delícia Gourmet</h1>
-  <p>Calendário de Reservas</p>
-</header>
+<header><h1>Delícia Gourmet</h1><p>Calendário de Reservas</p></header>
 
 <div class="calendar">
   <div class="calendar-header">
@@ -86,25 +71,21 @@ header p{color:var(--muted);font-size:1rem}
   <div class="modal-content">
     <h3 id="modalDate">Reservas do dia</h3>
     <div id="reservasList"></div>
-    <button class="edit-btn" id="editarBtn">Editar Reservas</button>
+    <button class="edit-btn" id="editarBtn">Editar / Excluir</button>
     <button class="close-btn" id="closeModal">Fechar</button>
   </div>
 </div>
 
 <script>
 const GAS_ENDPOINT="https://script.google.com/macros/s/AKfycbxFJHYGRF0B5Wj49z6FIzpvtng2bi5mG47_-V4v3PnTY3U4uL1ou8JmIKw-dRvlCwonow/exec";
-const ADMIN_SENHA="8486"; // 🔐 senha para editar
+const ADMIN_SENHA="8486";
 let reservas=[],currentDate=new Date();
-const daysContainer=document.getElementById("days");
-const monthYear=document.getElementById("monthYear");
-const modal=document.getElementById("modal");
-const reservasList=document.getElementById("reservasList");
-const modalDate=document.getElementById("modalDate");
-const closeModal=document.getElementById("closeModal");
-const overlay=document.getElementById("overlay");
-const editarBtn=document.getElementById("editarBtn");
+const daysContainer=document.getElementById("days"),monthYear=document.getElementById("monthYear"),
+modal=document.getElementById("modal"),reservasList=document.getElementById("reservasList"),
+modalDate=document.getElementById("modalDate"),closeModal=document.getElementById("closeModal"),
+overlay=document.getElementById("overlay"),editarBtn=document.getElementById("editarBtn");
 
-/* ====== CARREGAR RESERVAS ====== */
+/* ====== CARREGAR ====== */
 async function carregarReservas(){
   overlay.style.display="flex";
   try{
@@ -112,25 +93,20 @@ async function carregarReservas(){
     reservas=await res.json();
     overlay.style.display="none";
     renderCalendar();
-  }catch(e){
-    overlay.innerHTML="<div style='color:red;text-align:center'>❌ Erro: "+e.message+"</div>";
-  }
+  }catch(e){overlay.innerHTML="<div style='color:red'>❌ "+e.message+"</div>";}
 }
 
 /* ====== CALENDÁRIO ====== */
 function renderCalendar(){
-  const y=currentDate.getFullYear();
-  const m=currentDate.getMonth();
+  const y=currentDate.getFullYear(),m=currentDate.getMonth();
   const first=new Date(y,m,1),last=new Date(y,m+1,0);
   const months=["Janeiro","Fevereiro","Março","Abril","Maio","Junho","Julho","Agosto","Setembro","Outubro","Novembro","Dezembro"];
-  monthYear.textContent=`${months[m]} ${y}`;
-  daysContainer.innerHTML="";
+  monthYear.textContent=`${months[m]} ${y}`;daysContainer.innerHTML="";
   for(let i=0;i<first.getDay();i++)daysContainer.innerHTML+="<div></div>";
   for(let d=1;d<=last.getDate();d++){
     const date=`${y}-${String(m+1).padStart(2,"0")}-${String(d).padStart(2,"0")}`;
     const list=reservas.filter(r=>r.data===date);
-    const el=document.createElement("div");
-    el.classList.add("day");
+    const el=document.createElement("div");el.classList.add("day");
     el.innerHTML=`<div class='num'>${d}</div>`;
     if(list.length>0){
       el.classList.add("reservado");
@@ -148,11 +124,19 @@ function abrirModal(data,list){
   reservasList.innerHTML="";
   list.forEach((r,i)=>{
     reservasList.innerHTML+=`
-      <div class='reserva-item' data-index='${i}'>
+      <div class='reserva-item'>
         <strong>${r.nome}</strong>
-        <span>🕒 ${r.horario||""}</span>
-        <span>👥 ${r.pessoas||""}</span>
-        <span>🍽️ Mesa ${r.mesa||""}</span>
+        <span>🕒 Horário: ${r.horario||"-"}</span>
+        <span>👥 Pessoas: ${r.pessoas||"-"}</span>
+        <span>🍽️ Mesa: ${r.mesa||"-"}</span>
+        <span>🎉 Ocasião: ${r.ocasiao||"-"}</span>
+        <span>💐 Decoração: ${r.decoracao||"-"}</span>
+        <span>📋 Comanda: ${r.comanda||"-"}</span>
+        <span>📞 Contato: ${r.contato||"-"}</span>
+        <span>📧 E-mail: ${r.email||"-"}</span>
+        <span>📅 Status: ${r.status||"-"}</span>
+        <button style="margin-top:8px;background:#b8860b;color:white;border:none;border-radius:6px;padding:6px 12px;cursor:pointer" onclick="editar(${i},'${data}')">Editar</button>
+        <button style="margin-left:6px;background:#b91c1c;color:white;border:none;border-radius:6px;padding:6px 12px;cursor:pointer" onclick="excluir('${data}','${r.nome}')">Excluir</button>
       </div>`;
   });
   modal.dataset.data=data;
@@ -160,40 +144,39 @@ function abrirModal(data,list){
 }
 closeModal.onclick=()=>modal.classList.remove("show");
 
-/* ====== EDIÇÃO ====== */
-editarBtn.onclick=()=>{
+/* ====== EDITAR ====== */
+function editar(i,data){
   const senha=prompt("Digite a senha de administrador:");
   if(senha!==ADMIN_SENHA){alert("Senha incorreta.");return;}
-  const dia=modal.dataset.data;
-  const list=reservas.filter(r=>r.data===dia);
-  reservasList.innerHTML="";
-  list.forEach((r,i)=>{
-    reservasList.innerHTML+=`
-      <div class='reserva-item'>
-        <label>Nome:<input id='nome${i}' value='${r.nome}'></label><br>
-        <label>Horário:<input id='hora${i}' value='${r.horario||""}'></label><br>
-        <label>Pessoas:<input id='pess${i}' value='${r.pessoas||""}'></label><br>
-        <label>Mesa:<input id='mesa${i}' value='${r.mesa||""}'></label><br>
-        <button onclick='salvar(${i},"${dia}")'>Salvar</button>
-      </div>`;
-  });
-};
+  const r=reservas.filter(x=>x.data===data)[i];
+  reservasList.innerHTML=`
+    <div class='reserva-item'>
+      <label>Nome:<input id='nome' value='${r.nome}'></label><br>
+      <label>Horário:<input id='hora' value='${r.horario||""}'></label><br>
+      <label>Pessoas:<input id='pessoas' value='${r.pessoas||""}'></label><br>
+      <label>Mesa:<input id='mesa' value='${r.mesa||""}'></label><br>
+      <button onclick="salvar('${data}','${r.nome}')">Salvar</button>
+    </div>`;
+}
 
-async function salvar(i,dia){
-  const nome=document.getElementById(`nome${i}`).value;
-  const horario=document.getElementById(`hora${i}`).value;
-  const pessoas=document.getElementById(`pess${i}`).value;
-  const mesa=document.getElementById(`mesa${i}`).value;
-  const payload={acao:"editarReserva",data:dia,nome,horario,pessoas,mesa};
-  const res=await fetch(GAS_ENDPOINT,{
-    method:"POST",
-    headers:{"Content-Type":"application/json"},
-    body:JSON.stringify(payload)
-  });
-  const json=await res.json();
-  alert(json.mensagem||"Alteração salva!");
-  carregarReservas();
-  modal.classList.remove("show");
+async function salvar(data,nomeAntigo){
+  overlay.style.display="flex";overlay.innerHTML="<div class='loader'></div><div>Salvando...</div>";
+  const nome=document.getElementById("nome").value,horario=document.getElementById("hora").value,
+        pessoas=document.getElementById("pessoas").value,mesa=document.getElementById("mesa").value;
+  const payload={acao:"editarReserva",senha:ADMIN_SENHA,data,nomeAntigo,nome,horario,pessoas,mesa};
+  const res=await fetch(GAS_ENDPOINT,{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify(payload)});
+  const json=await res.json();alert(json.mensagem||"Alteração salva!");
+  overlay.style.display="none";carregarReservas();modal.classList.remove("show");
+}
+
+/* ====== EXCLUIR ====== */
+async function excluir(data,nome){
+  if(!confirm(`Excluir reserva de ${nome}?`))return;
+  overlay.style.display="flex";overlay.innerHTML="<div class='loader'></div><div>Excluindo...</div>";
+  const payload={acao:"excluirReserva",senha:ADMIN_SENHA,data,nome};
+  const res=await fetch(GAS_ENDPOINT,{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify(payload)});
+  const json=await res.json();alert(json.mensagem||"Concluído.");
+  overlay.style.display="none";carregarReservas();modal.classList.remove("show");
 }
 
 /* ====== NAVEGAÇÃO ====== */
@@ -201,7 +184,7 @@ document.getElementById("prevMonth").onclick=()=>{currentDate.setMonth(currentDa
 document.getElementById("nextMonth").onclick=()=>{currentDate.setMonth(currentDate.getMonth()+1);renderCalendar();};
 
 /* ====== INÍCIO ====== */
-window.onload=()=>{carregarReservas();};
+window.onload=()=>carregarReservas();
 </script>
 </body>
 </html>
