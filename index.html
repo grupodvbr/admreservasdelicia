@@ -32,8 +32,8 @@ header p{color:var(--muted);font-size:1rem}
 .modal-content{background:var(--card);border:1px solid var(--gold);border-radius:var(--radius);padding:25px 35px;width:90%;max-width:850px;max-height:85vh;overflow-y:auto;box-shadow:0 0 60px rgba(212,175,55,.25);}
 .modal-content h3{text-align:center;color:var(--gold);font-family:'Playfair Display',serif;font-size:1.4rem;margin-bottom:20px;}
 .reserva-item{background:var(--bg);border:1px solid rgba(212,175,55,.3);border-radius:12px;padding:16px;margin-bottom:14px;}
-.reserva-item strong{color:var(--gold);font-size:1.1rem;}
-.reserva-item span{display:block;margin-top:4px;font-size:.95rem;color:var(--muted);}
+.reserva-item label{display:block;color:var(--gold);margin-top:6px;font-size:.9rem}
+.reserva-item input{width:100%;background:var(--card);border:1px solid rgba(255,255,255,.1);border-radius:8px;padding:6px 8px;color:var(--text);margin-top:3px;}
 .btn{border:none;border-radius:8px;padding:8px 14px;margin-top:8px;cursor:pointer;font-weight:600}
 .btn-edit{background:var(--accent);color:#fff}
 .btn-del{background:var(--red);color:#fff;margin-left:6px}
@@ -133,7 +133,7 @@ function abrirModal(data,list){
         <span>📞 Contato: ${r.contato||"-"}</span>
         <span>📧 E-mail: ${r.email||"-"}</span>
         <span>📅 Status: ${r.status||"-"}</span>
-        <button class='btn btn-edit' onclick="editar('${data}','${r.nome}','${i}')">Editar</button>
+        <button class='btn btn-edit' onclick="editar('${data}','${r.nome}')">Editar</button>
         <button class='btn btn-del' onclick="excluir('${data}','${r.nome}')">Excluir</button>
       </div>`;
   });
@@ -142,34 +142,54 @@ function abrirModal(data,list){
 }
 closeModal.onclick=()=>modal.classList.remove("show");
 
-/* === Edição === */
-function editar(data,nome,index){
+/* === Editar === */
+function editar(data,nome){
   const senha=prompt("Senha de administrador:");
   if(senha!==ADMIN_SENHA)return alert("Senha incorreta.");
-  const r=reservas.filter(x=>x.data===data && x.nome===nome)[0];
+  const r=reservas.find(x=>x.data===data && x.nome===nome);
   reservasList.innerHTML=`
     <div class='reserva-item'>
-      <label>Nome:<input id='nome' value='${r.nome}'></label><br>
-      <label>Horário:<input id='hora' value='${r.horario||""}'></label><br>
-      <label>Pessoas:<input id='pessoas' value='${r.pessoas||""}'></label><br>
-      <label>Mesa:<input id='mesa' value='${r.mesa||""}'></label><br>
+      <label>Nome:<input id='nome' value='${r.nome}'></label>
+      <label>Horário:<input id='hora' value='${r.horario||""}'></label>
+      <label>Pessoas:<input id='pessoas' value='${r.pessoas||""}'></label>
+      <label>Mesa:<input id='mesa' value='${r.mesa||""}'></label>
+      <label>Ocasião:<input id='ocasiao' value='${r.ocasiao||""}'></label>
+      <label>Decoração:<input id='decoracao' value='${r.decoracao||""}'></label>
+      <label>Comanda:<input id='comanda' value='${r.comanda||""}'></label>
+      <label>Contato:<input id='contato' value='${r.contato||""}'></label>
+      <label>Email:<input id='email' value='${r.email||""}'></label>
+      <label>Status:<input id='status' value='${r.status||""}'></label>
       <button class='btn btn-edit' onclick="salvar('${data}','${r.nome}')">Salvar</button>
     </div>`;
 }
 
+/* === Salvar === */
 async function salvar(data,nomeAntigo){
   overlay.innerHTML="<div class='loader'></div><div>Salvando...</div>";
   overlay.style.display="flex";
-  const nome=document.getElementById("nome").value,horario=document.getElementById("hora").value,
-        pessoas=document.getElementById("pessoas").value,mesa=document.getElementById("mesa").value;
-  const payload={acao:"editarReserva",senha:ADMIN_SENHA,data,nomeAntigo,nome,horario,pessoas,mesa};
+  const payload={
+    acao:"editarReserva",
+    senha:ADMIN_SENHA,
+    data,
+    nomeAntigo,
+    nome:document.getElementById("nome").value,
+    horario:document.getElementById("hora").value,
+    pessoas:document.getElementById("pessoas").value,
+    mesa:document.getElementById("mesa").value,
+    ocasiao:document.getElementById("ocasiao").value,
+    decoracao:document.getElementById("decoracao").value,
+    comanda:document.getElementById("comanda").value,
+    contato:document.getElementById("contato").value,
+    email:document.getElementById("email").value,
+    status:document.getElementById("status").value
+  };
   const res=await fetch(GAS_ENDPOINT,{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify(payload)});
   const json=await res.json();
   overlay.innerHTML=`<div class='success'>${json.mensagem||"✅ Salvo!"}</div>`;
   setTimeout(()=>{overlay.style.display="none";carregarReservas();modal.classList.remove("show");},1500);
 }
 
-/* === Exclusão === */
+/* === Excluir === */
 async function excluir(data,nome){
   if(!confirm(`Excluir reserva de ${nome}?`))return;
   overlay.innerHTML="<div class='loader'></div><div>Excluindo...</div>";
