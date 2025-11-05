@@ -115,7 +115,14 @@ function renderCalendar(){
 }
 
 function abrirModal(data,list){
-  const dataFormatada=new Date(data).toLocaleDateString("pt-BR",{weekday:"long",day:"2-digit",month:"long"});
+  const partes = data.split("-");
+const localDate = new Date(partes[0], partes[1]-1, partes[2]); // cria data local sem UTC
+const dataFormatada = localDate.toLocaleDateString("pt-BR", {
+  weekday: "long",
+  day: "2-digit",
+  month: "long"
+});
+
   modalDate.textContent=dataFormatada;
   reservasList.innerHTML="";
   list.forEach(r=>{
